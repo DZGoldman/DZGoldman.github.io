@@ -96,9 +96,9 @@ var boardMaker= function() {
 
 // get the boxes and give each cell it's box key (NTS: DRY THIS UP)
   var boxZero= getBox(0,0); boxZero.forEach(function(cell) {cell.box=0} );
-  var boxOne=getBox(0,3);     boxOne.forEach(function(cell) {cell.box=1} );
-  var boxTwo=getBox(0,6);    boxTwo.forEach(function(cell) {cell.box=2} );
-  var boxThree=getBox(3,0);  boxThree.forEach(function(cell) {cell.box=3} );
+  var boxOne=getBox(0,3);  boxOne.forEach(function(cell) {cell.box=1} );
+  var boxTwo=getBox(0,6);  boxTwo.forEach(function(cell) {cell.box=2} );
+  var boxThree=getBox(3,0); boxThree.forEach(function(cell) {cell.box=3} );
   var boxFour=getBox(3,3); boxFour.forEach(function(cell) {cell.box=4} );
   var boxFive= getBox(3,6); boxFive.forEach(function(cell) {cell.box=5} );
   var boxSix=getBox(6,0); boxSix.forEach(function(cell) {cell.box=6} );
@@ -178,8 +178,6 @@ if(found){return false};
 
     //main sequence: loop through testing numbers. As so soon as their's a cell for which no number can fit, backtrack a cell and bump it up one. Repeat.
     main: function(){
-      //This is a 'loading' reading, but it's not working.
-
       console.log('wait');
       //the rest of this function will repeat until it's solved.
       while(!solved){
@@ -606,6 +604,39 @@ var impossible1 = [
  [0, 0, 5, 7, 0, 0, 0, 6, 0]
 ];
 
+
+//takes prints array of rows of whats currently on teh board. This is for me, not the user.
+/*
+var getPreset= function ()
+  {twoDLoop(Game.board, function(cell) {
+  var Row= cell.row; var Col= cell.column;
+      //this is a workaround. It's hard to explain why it's necessary. Just trust me, it's clever
+var index = 9*Row + Col;
+if($('input').eq(index).val()===""){+$('input').eq(index).val(0) };
+Game.board[Row][Col] =     +$('input').eq(index).val();
+} )
+Game.board.forEach( function(row) {
+  console.log(row)
+}
+)
+}
+*/
+
+/* this one's really hard
+[0, 0, 0, 0, 3, 7, 6, 0, 0],
+[0, 0, 0, 6, 0, 0, 0, 9, 0],
+[0, 0, 8, 0, 0, 0, 0, 0, 4],
+[0, 9, 0, 0, 0, 0, 0, 0, 1],
+[6, 0, 0, 0, 0, 0, 0, 0, 9],
+[3, 0, 0, 0, 0, 0, 0, 4, 0],
+[7, 0, 0, 0, 0, 0, 8, 0, 0],
+[0, 1, 0, 0, 0, 9, 0, 0, 0],
+[0, 0, 2, 5, 4, 0, 0, 0, 0]
+
+
+*/
+
+//this is, tentativcely, for the "trim" function
 /*testnum redundancy
 cell keys:
 this.possibleNumbers= [1,2,3,4,5,6,7,8,9];
@@ -623,35 +654,5 @@ Cell.prototype.updateTestNum= function (){
     return false};
     return true;
 }
-
-*/
-
-//takes prints array of rows of whats currently on teh board. This is for me, not the user.
-var getPreset= function ()
-  {twoDLoop(Game.board, function(cell) {
-  var Row= cell.row; var Col= cell.column;
-      //this is a workaround. It's hard to explain why it's necessary. Just trust me, it's clever
-var index = 9*Row + Col;
-if($('input').eq(index).val()===""){+$('input').eq(index).val(0) };
-Game.board[Row][Col] =     +$('input').eq(index).val();
-} )
-Game.board.forEach( function(row) {
-  console.log(row)
-}
-)
-}
-
-
-/* this one's really hard
-[0, 0, 0, 0, 3, 7, 6, 0, 0],
-[0, 0, 0, 6, 0, 0, 0, 9, 0],
-[0, 0, 8, 0, 0, 0, 0, 0, 4],
-[0, 9, 0, 0, 0, 0, 0, 0, 1],
-[6, 0, 0, 0, 0, 0, 0, 0, 9],
-[3, 0, 0, 0, 0, 0, 0, 4, 0],
-[7, 0, 0, 0, 0, 0, 8, 0, 0],
-[0, 1, 0, 0, 0, 9, 0, 0, 0],
-[0, 0, 2, 5, 4, 0, 0, 0, 0]
-
 
 */
