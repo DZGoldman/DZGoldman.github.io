@@ -1,4 +1,5 @@
-
+//Sudoku playrer/solver
+// By: Daniel Goldman
 console.log("sudoku time")
 
 //Some window-scope variables/functions
@@ -42,12 +43,12 @@ var Cell = function(row, col) {
     )
     return thisCol
   },
-  //the boxes array gets make later, b/c it's complicated
+  //the boxes array gets made later, b/c it's complicated
   Cell.prototype.getBox=function () {
    return boxes[this.box]
     }
 
-//move up the number we're testing. again, redudancy at the moment, but basically we're just bumping the testNumber up by one...
+//move up the number we're testing
   Cell.prototype.updateTestNum= function (){
     this.testNum++;
     //...and when it passes 9, reset it to zero.
@@ -69,13 +70,13 @@ var boardMaker= function() {
       newBoard[i] = new Array(9)
     };
     var inputIndex=0;
-    //iterates to each for and column. NTS: can I rejigger this part to use twoDLoop? My head hurts.
+    //iterates to each for and column. NTS: Can I rejigger this part to use twoDLoop? My head hurts.
    for(var row=0; row<9; row++){
      for( var col=0; col< 9; col++){
-       // put new cells in each positin with appropriate row/col keys..
+       // put new cells in each position with appropriate row/col keys..
        var newCell = new Cell(row, col);
        newBoard[row][col]= newCell;
-      // $('input') is all 81 cells as nodes, in order. give each one of them row and col attributes
+      // $('input') is all 81 cells as nodes, in order. Give each one of them row and col attributes
        $('input').eq(inputIndex).attr("row", row)
         $('input').eq(inputIndex).attr("col", col)
        inputIndex++;
@@ -120,7 +121,7 @@ var boardMaker= function() {
  var Board = boardMaker();
 
 
-//The Game!
+//The Game! (ie, the solver)
 var Game= {
     board: Board,
     //a cell, the one we're "currently looking at"
@@ -133,7 +134,7 @@ var Game= {
       //NTS: DRY THIS UP
       // Can this number legally "fit" in this cell? Check its row, column, box for a conflict.
     canFit: function(tcell, num) {
-      //the 'found' business if to cut it short once a conflict is found. This is to cut down on computation, since the function is gonna get used an awful lot.
+      //the 'found' business if to cut it short once a conflict is found. This is to cut down on computation, since this function is gonna get used an awful lot.
       var found=false;
       //check row
       tcell.getRow().forEach(function(cell){
@@ -162,7 +163,7 @@ if(found){return false};
       var $allInputs= $('input');
       for(var i=0; i< 81; i++){
         // NTS convert to for Each
-      //  the board at its row and column is eqial to tthe value
+      //  the board at its row and column is equal to the value
       var cell= Game.board[$allInputs.eq(i).attr("row")] [$allInputs.eq(i).attr("col")];
         cell.number = $allInputs.eq(i).val();
         cell.number= +cell.number;
@@ -176,7 +177,7 @@ if(found){return false};
       this.targetCell=this.board[0][0];
     },
 
-    //main sequence: loop through testing numbers. As so soon as their's a cell for which no number can fit, backtrack a cell and bump it up one. Repeat.
+    //main sequence: loop through testing numbers. As so soon as there's a cell for which no number can fit, backtrack a cell and bump it up one. Repeat.
     main: function(){
       console.log('wait');
       //the rest of this function will repeat until it's solved.
@@ -204,7 +205,7 @@ if(found){return false};
             //If we try to go past the 8th row, it MUST mean the puzzle is solved
             solved=true;
             console.log("I have stored the solution where you can't see it...");
-            //workaround- in case the row 8 column 8 is fixed. without this, we get stuck in a loop. Hard to explain, just trust me, it's clever
+            //Workaround- in case the row 8 column 8 is fixed. without this, we get stuck in a loop. Hard to explain, just trust me, it's clever
             this.targetCell.fixed=false;
             return;
           }
