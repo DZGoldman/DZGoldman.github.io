@@ -179,6 +179,7 @@ if(found){return false};
 
     //main sequence: loop through testing numbers. As so soon as there's a cell for which no number can fit, backtrack a cell and bump it up one. Repeat.
     main: function(){
+       startTime=(new Date()).getTime();
       console.log('wait');
       //the rest of this function will repeat until it's solved.
       while(!solved){
@@ -204,6 +205,9 @@ if(found){return false};
           if(newRow>8){
             //If we try to go past the 8th row, it MUST mean the puzzle is solved
             solved=true;
+             endTime=(new Date()).getTime();
+             duration=(endTime-startTime)/1000
+             console.log(duration)
             console.log("I have stored the solution where you can't see it...");
             //Workaround- in case the row 8 column 8 is fixed. without this, we get stuck in a loop. Hard to explain, just trust me, it's clever
             this.targetCell.fixed=false;
