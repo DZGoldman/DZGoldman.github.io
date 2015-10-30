@@ -1,6 +1,6 @@
 //Sudoku playrer/solver
 // By: Daniel Goldman
-console.log("sudoku time")
+console.log("sudoku time new")
 
 //Some window-scope variables/functions
 //assume it hasn't been solved yet, assume nothing is impossible.
