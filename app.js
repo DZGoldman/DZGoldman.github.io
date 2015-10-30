@@ -263,11 +263,16 @@ var randomFromArray= function(array) {
 var Readouts={
   load: "Type in the starting grid of any Sudoku puzzle you can find and push start. You can also use one of the preset puzzles — simply click the difficulty level you think you can handle. Sometimes it takes me a moment or two to solve it, so just be patient, k?",
   impossible: 'This puzzle is unsolvable by man, woman, and machine alike.',
-  start: "Solved it. Give it a shot yourself, if you wanna. Click hint to check your work so far. Good luck, I guess...",
   wait: "wait...",
   solved: "Solved!",
   hardest: "According to the Telegraph, this is the hardest Sudoku puzzle ever created. Yes, of course I already solved it! What do you think I am, human??"
 };
+
+var start= function(time) {
+   return "Solved it in "+ String(time)+" seconds. Give it a shot yourself, if you wanna. Click hint to check your work so far. Good luck, I guess..."
+ };
+
+
 
 var startButton = function() {
 
@@ -277,7 +282,7 @@ var startButton = function() {
   $('.preset').css("display", "none");
   $('#give_up').css("display", "block");
   $('#check').css("display", "block");
-  $('#readout').text(Readouts.start);
+  $('#readout').text(start(duration));
   if(impossible) {
     impossible=false;
     $('#give_up').css("display", "none")
@@ -627,7 +632,10 @@ Game.board.forEach( function(row) {
 }
 */
 
-/* this one's really hard
+/* this one's really hard */
+var reallyHard=
+//takes 50.205 secs
+[
 [0, 0, 0, 0, 3, 7, 6, 0, 0],
 [0, 0, 0, 6, 0, 0, 0, 9, 0],
 [0, 0, 8, 0, 0, 0, 0, 0, 4],
@@ -637,9 +645,9 @@ Game.board.forEach( function(row) {
 [7, 0, 0, 0, 0, 0, 8, 0, 0],
 [0, 1, 0, 0, 0, 9, 0, 0, 0],
 [0, 0, 2, 5, 4, 0, 0, 0, 0]
+];
 
 
-*/
 
 //this is, tentativcely, for the "trim" function
 /*testnum redundancy
