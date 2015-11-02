@@ -34,6 +34,7 @@ var Cell = function(row, col) {
     var thisRow=this.row;
     return Game.board[thisRow];
     };
+    //nts: this is dumb. Don't build columns every time, 
   Cell.prototype.getCol= function () {
     var thisColNumber = this.column;
     var thisCol = [];
@@ -134,6 +135,8 @@ var Game= {
       //NTS: DRY THIS UP
       // Can this number legally "fit" in this cell? Check its row, column, box for a conflict.
     canFit: function(tcell, num) {
+      counter++;
+      if(counter%50000==0){console.log(counter)}
       //the 'found' business if to cut it short once a conflict is found. This is to cut down on computation, since this function is gonna get used an awful lot.
       var found=false;
       //check row
@@ -153,7 +156,7 @@ var Game= {
         if(cell.number==num){
           found= true};
       });
-if(found){return false};
+      if(found){return false};
     return true;
     },
 
@@ -181,6 +184,8 @@ if(found){return false};
     main: function(){
        startTime=(new Date()).getTime();
       console.log('wait');
+      // counts number of numbers tested
+      counter=0;
       //the rest of this function will repeat until it's solved.
       while(!solved){
       //if the targetCell is fixed, skip it.
@@ -188,7 +193,8 @@ if(found){return false};
       //can the testNum fit? if so, set it's value accordingly and target the next cell.
       if (this.canFit(this.targetCell, this.targetCell.testNum) ){
           this.targetCell.number = this.targetCell.testNum;
-          this.nextTarget()
+          this.nextTarget();
+
           //if not, test a new number
         }else{ this.nextPossiblity()}
     }
@@ -201,6 +207,7 @@ if(found){return false};
       if(newCol>8){
           newCol=0;
           newRow++;
+
           //win condition!
           if(newRow>8){
             //If we try to go past the 8th row, it MUST mean the puzzle is solved
@@ -224,6 +231,7 @@ if(found){return false};
         if(newCol<0){
             newCol=8;
             newRow--;
+
             if(newRow<0){
               //if we try to go before the 1st row, it MUST mean the puzzle is impossible, ie, has no solution.
               solved=true;
@@ -503,6 +511,7 @@ var medium3= [
 [0, 0, 1, 0, 2, 0, 8, 0, 0],
 ];
 
+//takes 4.32 seconds in 1.0
 var medium4=[
 [3, 0, 7, 2, 0, 0, 0, 0, 6],
 [0, 8, 5, 0, 6, 0, 0, 0, 0],
@@ -577,6 +586,7 @@ var hard4= [
   [0, 2, 8, 0, 0, 0, 0, 0, 0]
 ];
 var hard5=[
+  // 1 second in 1.0
   [0, 0, 0, 0, 8, 0, 1, 0, 0],
   [0, 0, 9, 0, 0, 3, 0, 0, 0],
   [0, 3, 5, 9, 0, 0, 0, 0, 0],
@@ -634,7 +644,7 @@ Game.board.forEach( function(row) {
 
 /* this one's really hard */
 var reallyHard=
-//takes 50.205 secs
+//takes 50.205 secs in 1.0
 [
 [0, 0, 0, 0, 3, 7, 6, 0, 0],
 [0, 0, 0, 6, 0, 0, 0, 9, 0],
